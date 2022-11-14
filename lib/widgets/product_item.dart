@@ -1,54 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:myshop/providers/cart.dart';
-import 'package:myshop/views/product_detail_screen.dart';
-import 'package:provider/provider.dart';
-import '../providers/product.dart';
-import '../utils/app_routes.dart';
+import 'package:myshop/providers/product.dart';
 
 class ProductItem extends StatelessWidget {
+  const ProductItem(this.product);
+
+  final Product product;
+
   @override
   Widget build(BuildContext context) {
-    final Product product = Provider.of<Product>(context, listen: false);
-    final Cart cart = Provider.of<Cart>(context, listen: false);
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-      child: GridTile(
-        // ignore: sort_child_properties_last
-        child: GestureDetector(
-          child: Image.network(
-            product.imgURL,
-            fit: BoxFit.cover,
-          ),
-          onTap: () {
-            Navigator.of(context)
-                .pushNamed(AppRoutes.PRODUCT_DETAIl, arguments: product);
-          },
-        ),
-        footer: GridTileBar(
-          backgroundColor: Colors.black87,
-          leading: Consumer<Product>(
-            builder: (ctx, product, _) => IconButton(
-              onPressed: () {
-                product.toggleFavorte();
-              },
-              color: Theme.of(context).accentColor,
-              icon: Icon(
-                  product.isFavorite ? Icons.favorite : Icons.favorite_border),
+    return ListTile(
+      leading: CircleAvatar(
+        backgroundImage: NetworkImage(product.imgURL),
+      ),
+      title: Text(product.title),
+      trailing: Container(
+        width: 100,
+        child: Row(
+          children: [
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.edit),
+              color: Theme.of(context).primaryColor,
             ),
-          ),
-          title: Text(
-            product.title,
-            textAlign: TextAlign.center,
-          ),
-          trailing: IconButton(
-            onPressed: () {
-              cart.additem(product);
-            },
-            icon: Icon(
-              Icons.shopping_cart,
-              color: Theme.of(context).accentColor,
+            Divider(),
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.delete),
+              color: Theme.of(context).errorColor,
             ),
-          ),
+          ],
         ),
       ),
     );
