@@ -5,14 +5,14 @@ import 'package:myshop/providers/product.dart';
 
 class CartItem {
   final String id;
-  final String productId;
+  final String? productId;
   final String title;
   final int quantity;
   final double price;
 
   CartItem({
     required this.id,
-    required this.productId,
+    this.productId,
     required this.title,
     required this.quantity,
     required this.price,
@@ -20,9 +20,9 @@ class CartItem {
 }
 
 class Cart with ChangeNotifier {
-  late Map<String, CartItem> _items = {};
+  late Map<String?, CartItem> _items = {};
 
-  Map<String, CartItem> get item {
+  Map<String?, CartItem> get item {
     return {..._items};
   }
 
@@ -63,7 +63,7 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeSingelitem(String productId) {
+  void removeSingelitem(String? productId) {
     if (!_items.containsKey(productId)) {
       return;
     }
@@ -84,7 +84,7 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeItem(String productId) {
+  void removeItem(String? productId) {
     _items.remove(productId);
     notifyListeners();
   }

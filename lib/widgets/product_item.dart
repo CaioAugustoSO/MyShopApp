@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myshop/providers/product.dart';
+import 'package:myshop/providers/products.dart';
+import 'package:myshop/utils/app_routes.dart';
+import 'package:provider/provider.dart';
 
 class ProductItem extends StatelessWidget {
   const ProductItem(this.product);
@@ -18,13 +21,42 @@ class ProductItem extends StatelessWidget {
         child: Row(
           children: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamed(AppRoutes.PRODUCTSFORM, arguments: product);
+              },
               icon: Icon(Icons.edit),
               color: Theme.of(context).primaryColor,
             ),
             Divider(),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                          title: Text('Delete Product'),
+                          content: Text('Are you sure ?'),
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop(false);
+                                },
+                                child: Text('Não')),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop(true);
+                                },
+                                child: Text('Sim')),
+                          ],
+                        )).then(
+                  (value) {
+                    if (value) {
+                      Provider.of<Products>(context, listen: false)
+                          .deleteProduct(product.id.toString());
+                    }
+                  },
+                );
+              },
               icon: Icon(Icons.delete),
               color: Theme.of(context).errorColor,
             ),
