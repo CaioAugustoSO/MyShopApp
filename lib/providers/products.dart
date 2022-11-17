@@ -1,12 +1,14 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:myshop/data/dummy_data.dart';
-
+import 'package:http/http.dart' as http;
 import 'product.dart';
 
 class Products with ChangeNotifier {
-  List<Product> _items = DUMMY_PRODUCTS;
+  final String _url =
+      'https://flutter-335de-default-rtdb.firebaseio.com/products.json';
+  List<Product> _items = [];
 
   List<Product> get items => [..._items];
 
@@ -14,9 +16,39 @@ class Products with ChangeNotifier {
     return _items.where((prod) => prod.isFavorite).toList();
   }
 
-  void addProduct(Product newProduct) {
+  Future<void> loadingProducts() async {
+    final response = await http.get(_url);
+    Map<String, dynamic> data = jsonDecode(response.body);
+    _items.clear();
+    if (data != null) {
+      data.forEach((id, productData) {
+        _items.add(Product(
+          id: id,
+          title: productData['title'],
+          description: productData['description'],
+          price: productData['price'],
+          imgURL: productData['imgURL'],
+          isFavorite: productData['isFavorite'],
+        ));
+      });
+      notifyListeners();
+    }
+    return Future.value();
+  }
+
+  Future<void> addProduct(Product newProduct) async {
+    final response = await http.post(
+      _url,
+      body: json.encode({
+        'title': newProduct.title,
+        'description': newProduct.description,
+        'price': newProduct.price,
+        'imgURL': newProduct.imgURL,
+        'isFavorite': newProduct.isFavorite
+      }),
+    );
     _items.add(Product(
-        id: Random().nextDouble().toString(),
+        id: json.decode(response.body)['name'],
         title: newProduct.title,
         description: newProduct.description,
         price: newProduct.price,
