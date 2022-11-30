@@ -92,53 +92,50 @@ class _ProductsFormScreenState extends State<ProductsFormScreen> {
     });
 
     final products = Provider.of<Products>(context, listen: false);
-    if (_formData['id'] == null) {
-      try {
+    try {
+      if (_formData['id'] == null) {
         await products.addProduct(product);
-        Navigator.of(context).pop();
-      } catch (error) {
-        await showDialog<Null>(
-          context: context,
-          builder: (ctx) => AlertDialog(
-            title: Text('Error'),
-            content: Text(
-              'An error ocurred while saving the product',
-            ),
-            actions: [
-              TextButton(
-                  onPressed: (() => Navigator.of(context).pop()),
-                  child: Text('Ok'))
-            ],
-          ),
-        );
-      } finally {
-        setState(() {
-          _isLoading = false;
-        });
+      } else {
+        await products.updateProduct(product);
       }
-    } else {
-      products.updateProduct(product);
+      Navigator.of(context).pop();
+    } catch (error) {
+      await showDialog<Null>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Error'),
+          content: const Text(
+            'An error ocurred while saving the product',
+          ),
+          actions: [
+            TextButton(
+                onPressed: (() => Navigator.of(context).pop()),
+                child: const Text('Ok'))
+          ],
+        ),
+      );
+    } finally {
       setState(() {
         _isLoading = false;
       });
     }
-    Navigator.of(context).pop();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Product Form'),
+        title: const Text('Product Form'),
         actions: [
           IconButton(
               onPressed: () {
                 _saveForm();
               },
-              icon: Icon(Icons.save))
+              icon: const Icon(Icons.save))
         ],
       ),
       body: _isLoading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : Padding(
@@ -149,7 +146,7 @@ class _ProductsFormScreenState extends State<ProductsFormScreen> {
                   children: [
                     TextFormField(
                       initialValue: _formData['title'] as String,
-                      decoration: InputDecoration(labelText: 'Titulo'),
+                      decoration: const InputDecoration(labelText: 'Titulo'),
                       textInputAction: TextInputAction.next,
                       onFieldSubmitted: (_) {
                         FocusScope.of(context).requestFocus(_priceFocusNode);
@@ -167,10 +164,10 @@ class _ProductsFormScreenState extends State<ProductsFormScreen> {
                     ),
                     TextFormField(
                       initialValue: _formData['price'].toString(),
-                      decoration: InputDecoration(labelText: 'Preço'),
+                      decoration: const InputDecoration(labelText: 'Preço'),
                       textInputAction: TextInputAction.next,
                       focusNode: _priceFocusNode,
-                      keyboardType: TextInputType.numberWithOptions(
+                      keyboardType: const TextInputType.numberWithOptions(
                         decimal: true,
                       ),
                       onFieldSubmitted: (_) {
@@ -191,7 +188,8 @@ class _ProductsFormScreenState extends State<ProductsFormScreen> {
                     ),
                     TextFormField(
                       initialValue: _formData['description'] as String,
-                      decoration: InputDecoration(labelText: 'Description'),
+                      decoration:
+                          const InputDecoration(labelText: 'Description'),
                       maxLines: 3,
                       keyboardType: TextInputType.multiline,
                       onFieldSubmitted: (_) {
@@ -215,8 +213,9 @@ class _ProductsFormScreenState extends State<ProductsFormScreen> {
                       children: [
                         Expanded(
                           child: TextFormField(
-                            initialValue: _formData['imgURL'] as String,
-                            decoration: InputDecoration(labelText: 'Image URL'),
+                            // initialValue: _formData['imgURL'] as String,
+                            decoration:
+                                const InputDecoration(labelText: 'Image URL'),
                             keyboardType: TextInputType.multiline,
                             textInputAction: TextInputAction.done,
                             focusNode: _imgUrlFocusNode,
@@ -240,7 +239,7 @@ class _ProductsFormScreenState extends State<ProductsFormScreen> {
                           alignment: Alignment.center,
                           height: 100,
                           width: 100,
-                          margin: EdgeInsets.only(
+                          margin: const EdgeInsets.only(
                             top: 8,
                             left: 10,
                           ),
@@ -248,13 +247,13 @@ class _ProductsFormScreenState extends State<ProductsFormScreen> {
                             border: Border.all(color: Colors.grey, width: 1),
                           ),
                           child: _imgUrlController.text.isEmpty
-                              ? Text(
+                              ? const Text(
                                   'Informe a URL',
                                   textAlign: TextAlign.center,
                                 )
                               : FittedBox(
-                                  child: Image.network(_imgUrlController.text),
                                   fit: BoxFit.cover,
+                                  child: Image.network(_imgUrlController.text),
                                 ),
                         )
                       ],

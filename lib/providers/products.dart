@@ -1,13 +1,13 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:myshop/exceptions/http_exception.dart';
+import 'package:myshop/utils/constants.dart';
 import 'product.dart';
 
 class Products with ChangeNotifier {
-  final String _url =
-      'https://flutter-335de-default-rtdb.firebaseio.com/products.json';
+  final String _baseUrl = '${Constants.BASE_API_URL}/products';
   List<Product> _items = [];
 
   List<Product> get items => [..._items];
@@ -17,7 +17,7 @@ class Products with ChangeNotifier {
   }
 
   Future<void> loadingProducts() async {
-    final response = await http.get(_url);
+    final response = await http.get("$_baseUrl.json");
     Map<String, dynamic> data = jsonDecode(response.body);
     _items.clear();
     if (data != null) {
@@ -38,7 +38,7 @@ class Products with ChangeNotifier {
 
   Future<void> addProduct(Product newProduct) async {
     final response = await http.post(
-      _url,
+      "$_baseUrl.json",
       body: json.encode({
         'title': newProduct.title,
         'description': newProduct.description,
@@ -56,23 +56,39 @@ class Products with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateProduct(Product product) {
+  Future<void> updateProduct(Product product) async {
     if (product == null || product.id == null) {
       return;
     }
     final index = _items.indexWhere((prod) => prod.id == product.id);
 
     if (index >= 0) {
+      await http.patch(
+        "$_baseUrl/${product.id}.json",
+        body: json.encode({
+          'title': product.title,
+          'description': product.description,
+          'price': product.price,
+          'imgURL': product.imgURL,
+        }),
+      );
       _items[index] = product;
       notifyListeners();
     }
   }
 
-  void deleteProduct(String id) {
+  Future<void> deleteProduct(String id) async {
     final index = _items.indexWhere((prod) => prod.id == id);
     if (index >= 0) {
-      _items.removeWhere((prod) => prod.id == id);
+      final product = _items[index];
+      _items.remove(product);
       notifyListeners();
+      final response = await http.delete("$_baseUrl/${product.id}.json");
+      if (response.statusCode >= 400) {
+        _items.insert(index, product);
+        notifyListeners();
+        throw HttpException('Ocorreu um erro na exclusão do produto');
+      }
     }
   }
 

@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:myshop/providers/product.dart';
 
 class CartItem {
@@ -22,7 +22,7 @@ class CartItem {
 class Cart with ChangeNotifier {
   late Map<String?, CartItem> _items = {};
 
-  Map<String?, CartItem> get item {
+  Map<String?, CartItem> get items {
     return {..._items};
   }
 
