@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:myshop/views/products_form_screen.dart';
-import 'package:myshop/views/products_screen.dart';
+
+import './providers/auth.dart';
 import './providers/cart.dart';
 import './providers/orders.dart';
 import './providers/products.dart';
+
+import './views/auth_home_screen.dart';
+import './views/auth_screen.dart';
+import './views/products_form_screen.dart';
+import './views/products_screen.dart';
 import './views/cart_screen.dart';
 import './views/product_detail_screen.dart';
 import './views/products_overview_screen.dart';
 import './views/orders_screen.dart';
+
 import './utils/app_routes.dart';
 import 'package:provider/provider.dart';
 
@@ -27,11 +33,14 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => new Orders(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => new Auth(),
+        ),
       ],
       child: MaterialApp(
         title: 'Minha Loja',
         theme: ThemeData(
-          primarySwatch: Colors.purple,
+          primarySwatch: Colors.pink,
           accentColor: Colors.deepOrange,
           fontFamily: 'Lato',
         ),
@@ -42,8 +51,9 @@ class MyApp extends StatelessWidget {
           AppRoutes.ORDERS: (ctx) => OrderScreen(),
           AppRoutes.PRODUCTS: (ctx) => ProductsSreen(),
           AppRoutes.PRODUCTSFORM: (ctx) => ProductsFormScreen(),
+          AppRoutes.AUTH_HOME: (context) => AuthorHome(),
         },
-        home: ProductsOverviewScreen(),
+        // home: ProductsOverviewScreen(),
       ),
     );
   }
