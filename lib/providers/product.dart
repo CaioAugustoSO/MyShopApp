@@ -21,21 +21,21 @@ class Product with ChangeNotifier {
     required this.imgURL,
     this.isFavorite = false,
   });
-  void _toggleFavorite() {
-    _toggleFavorite();
-  }
 
-  Future<void> toggleFavorte() async {
+  void _toggleFavorite() {
     isFavorite = !isFavorite;
     notifyListeners();
-    try {
-      final url = '${Constants.BASE_API_URL}/products/$id.json';
+  }
 
-      final response = await http.patch(
+  Future<void> toggleFavorte(String? token, String? userId) async {
+    _toggleFavorite();
+    try {
+      final url =
+          '${Constants.BASE_API_URL}/userFavorites/$userId/$id.json?auth=$token';
+
+      final response = await http.put(
         url,
-        body: json.encode({
-          'isFavorite': isFavorite,
-        }),
+        body: json.encode(isFavorite),
       );
       if (response.statusCode >= 400) {
         _toggleFavorite();

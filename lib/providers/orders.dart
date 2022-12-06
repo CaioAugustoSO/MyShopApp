@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:myshop/providers/cart.dart';
+import '/providers/cart.dart';
 
 import '../utils/constants.dart';
 
@@ -22,6 +22,10 @@ class Order {
 }
 
 class Orders with ChangeNotifier {
+  String? _token;
+  String? _userId;
+
+  Orders([this._token, this._userId, this._items = const []]);
   final String _baseUrl = '${Constants.BASE_API_URL}/orders';
   List<Order> _items = [];
 
@@ -35,7 +39,7 @@ class Orders with ChangeNotifier {
 
   Future<void> loadingOrders() async {
     List<Order> loadedItems = [];
-    final response = await http.get("$_baseUrl.json");
+    final response = await http.get("$_baseUrl/$_userId.json?auth=$_token");
     Map<String, dynamic> data = jsonDecode(response.body);
     loadedItems.clear();
     if (data != null) {
@@ -63,7 +67,7 @@ class Orders with ChangeNotifier {
   Future<void> addOrders(Cart cart) async {
     final date = DateTime.now();
     final response = await http.post(
-      '$_baseUrl.json',
+      '$_baseUrl/$_userId.json?auth=$_token',
       body: json.encode(
         {
           'total': cart.totalAmount,
