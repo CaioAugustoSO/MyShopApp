@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myshop/views/auth_screen.dart';
-import 'package:myshop/views/products_overview_screen.dart';
+import '/views/auth_screen.dart';
+import '/views/products_overview_screen.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth.dart';
 

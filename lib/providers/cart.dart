@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
-import 'package:myshop/providers/product.dart';
+import '/providers/product.dart';
 
 class CartItem {
   final String id;

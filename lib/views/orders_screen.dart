@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myshop/widgets/order_widget.dart';
+import '../widgets/order_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/app_drawer.dart';

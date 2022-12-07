@@ -3,8 +3,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:myshop/data/store.dart';
-import 'package:myshop/exceptions/auth_exception.dart';
+import '../data/store.dart';
+import '../exceptions/auth_exception.dart';
 
 class Auth with ChangeNotifier {
   Timer? _logoutTimer;

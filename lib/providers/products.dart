@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:myshop/exceptions/http_exception.dart';
-import 'package:myshop/utils/constants.dart';
+import '../exceptions/http_exception.dart';
+import '../utils/constants.dart';
 import 'product.dart';
 
 class Products with ChangeNotifier {

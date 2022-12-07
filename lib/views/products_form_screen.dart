@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:myshop/providers/product.dart';
-import 'package:myshop/providers/products.dart';
+import '../providers/product.dart';
+import '../providers/products.dart';
 import 'package:provider/provider.dart';
 
 class ProductsFormScreen extends StatefulWidget {
