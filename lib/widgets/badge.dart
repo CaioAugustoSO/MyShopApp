@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 
 class Badge extends StatelessWidget {
@@ -21,21 +23,24 @@ class Badge extends StatelessWidget {
       children: [
         child,
         Positioned(
+          right: 8,
+          top: 8,
           child: Container(
-            padding: EdgeInsets.all(2),
+            padding: const EdgeInsets.all(2),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: color != null ? color : Theme.of(context).accentColor,
+              // ignore: prefer_if_null_operators
+              color: color != null
+                  ? color
+                  : Theme.of(context).colorScheme.secondary,
             ),
-            constraints: BoxConstraints(minHeight: 16, minWidth: 16),
+            constraints: const BoxConstraints(minHeight: 16, minWidth: 16),
             child: Text(
               value,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 10),
+              style: const TextStyle(fontSize: 10),
             ),
           ),
-          right: 8,
-          top: 8,
         )
       ],
     );

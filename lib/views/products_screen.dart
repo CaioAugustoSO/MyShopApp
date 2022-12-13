@@ -18,7 +18,7 @@ class ProductsSreen extends StatelessWidget {
     final products = productsData.items;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Manage Products'),
+        title: const Text('Manage Products'),
         actions: [
           IconButton(
             onPressed: () {
@@ -26,21 +26,21 @@ class ProductsSreen extends StatelessWidget {
                 AppRoutes.PRODUCTSFORM,
               );
             },
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
           )
         ],
       ),
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
       body: RefreshIndicator(
         onRefresh: () => _refreshPage(context),
         child: Padding(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: ListView.builder(
             itemCount: productsData.itemsCount,
             itemBuilder: ((context, index) => Column(
                   children: [
                     ProductItem(products[index]),
-                    Divider(),
+                    const Divider(),
                   ],
                 )),
           ),

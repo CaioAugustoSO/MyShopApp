@@ -1,3 +1,5 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'package:flutter/material.dart';
 import '../providers/cart.dart';
 import 'package:provider/provider.dart';
@@ -11,16 +13,16 @@ class CartItemWidget extends StatelessWidget {
       key: ValueKey(cartItem.id),
       background: Container(
         color: Theme.of(context).errorColor,
-        child: Icon(
+        alignment: Alignment.centerRight,
+        padding: const EdgeInsets.only(right: 20),
+        margin: const EdgeInsets.symmetric(
+          horizontal: 15,
+          vertical: 4,
+        ),
+        child: const Icon(
           Icons.delete,
           color: Colors.white,
           size: 40,
-        ),
-        alignment: Alignment.centerRight,
-        padding: EdgeInsets.only(right: 20),
-        margin: EdgeInsets.symmetric(
-          horizontal: 15,
-          vertical: 4,
         ),
       ),
       direction: DismissDirection.endToStart,
@@ -28,19 +30,19 @@ class CartItemWidget extends StatelessWidget {
         return showDialog(
           context: context,
           builder: ((context) => AlertDialog(
-                title: Text('Are you sure?'),
+                title: const Text('Are you sure?'),
                 content: Text('Are you sure deleting ${cartItem.title}?'),
                 actions: [
                   TextButton(
                       onPressed: () {
                         Navigator.of(context).pop(true);
                       },
-                      child: Text('Yes')),
+                      child: const Text('Yes')),
                   TextButton(
                       onPressed: () {
                         Navigator.of(context).pop(false);
                       },
-                      child: Text('No')),
+                      child: const Text('No')),
                 ],
               )),
         );
@@ -50,13 +52,13 @@ class CartItemWidget extends StatelessWidget {
             .removeItem(cartItem.productId);
       },
       child: Card(
-        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
         child: Padding(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: ListTile(
             leading: CircleAvatar(
                 child: Padding(
-              padding: EdgeInsets.all(2),
+              padding: const EdgeInsets.all(2),
               child: FittedBox(
                 child: Text('R\$${cartItem.price}'),
               ),

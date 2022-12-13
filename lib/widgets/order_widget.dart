@@ -1,4 +1,4 @@
-import 'dart:ui';
+// ignore_for_file: import_of_legacy_library_into_null_safe
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -18,27 +18,31 @@ class _OrderWidgetState extends State<OrderWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(10),
-      child: Column(
-        children: [
-          ListTile(
-            title: Text('R\$ ${widget.order.total.toStringAsFixed(2)}'),
-            subtitle:
-                Text(DateFormat('dd/MM/yyyy hh:mm').format(widget.order.date)),
-            trailing: IconButton(
-              icon: Icon(Icons.expand_more),
-              onPressed: () {
-                setState(() {
-                  _expanded = !_expanded;
-                });
-              },
+    final itemsHeight = (widget.order.products.length * 30) + 10;
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 300),
+      height: _expanded ? itemsHeight + 100 : 100,
+      child: Card(
+        margin: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            ListTile(
+              title: Text('R\$ ${widget.order.total.toStringAsFixed(2)}'),
+              subtitle: Text(
+                  DateFormat('dd/MM/yyyy hh:mm').format(widget.order.date)),
+              trailing: IconButton(
+                icon: const Icon(Icons.expand_more),
+                onPressed: () {
+                  setState(() {
+                    _expanded = !_expanded;
+                  });
+                },
+              ),
             ),
-          ),
-          if (_expanded)
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-              height: (widget.order.products.length * 30) + 10,
+            AnimatedContainer(
+              duration: Duration(milliseconds: 300),
+              height: _expanded ? itemsHeight.toDouble() : 0.0,
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
               child: ListView(
                 children: widget.order.products.map((product) {
                   return Row(
@@ -46,12 +50,12 @@ class _OrderWidgetState extends State<OrderWidget> {
                     children: [
                       Text(
                         product.title,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       Text(
                         '${product.quantity}x R\$ ${product.price}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
@@ -62,7 +66,8 @@ class _OrderWidgetState extends State<OrderWidget> {
                 }).toList(),
               ),
             ),
-        ],
+          ],
+        ),
       ),
     );
   }

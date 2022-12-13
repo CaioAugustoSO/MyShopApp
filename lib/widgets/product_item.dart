@@ -1,3 +1,5 @@
+// ignore_for_file: sized_box_for_whitespace, use_key_in_widget_constructors, import_of_legacy_library_into_null_safe
+
 import 'package:flutter/material.dart';
 import '../exceptions/http_exception.dart';
 import '../providers/product.dart';
@@ -27,28 +29,28 @@ class ProductItem extends StatelessWidget {
                 Navigator.of(context)
                     .pushNamed(AppRoutes.PRODUCTSFORM, arguments: product);
               },
-              icon: Icon(Icons.edit),
+              icon: const Icon(Icons.edit),
               color: Theme.of(context).primaryColor,
             ),
-            Divider(),
+            const Divider(),
             IconButton(
               onPressed: () {
                 showDialog(
                     context: context,
                     builder: (ctx) => AlertDialog(
-                          title: Text('Delete Product'),
-                          content: Text('Are you sure ?'),
+                          title: const Text('Delete Product'),
+                          content: const Text('Are you sure ?'),
                           actions: [
                             TextButton(
                                 onPressed: () {
                                   Navigator.of(context).pop(false);
                                 },
-                                child: Text('Não')),
+                                child: const Text('Não')),
                             TextButton(
                                 onPressed: () {
                                   Navigator.of(context).pop(true);
                                 },
-                                child: Text('Sim')),
+                                child: const Text('Sim')),
                           ],
                         )).then(
                   (value) async {
@@ -64,7 +66,7 @@ class ProductItem extends StatelessWidget {
                   },
                 );
               },
-              icon: Icon(Icons.delete),
+              icon: const Icon(Icons.delete),
               color: Theme.of(context).errorColor,
             ),
           ],

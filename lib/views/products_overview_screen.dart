@@ -39,10 +39,10 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Minha loja'),
+        title: const Text('Minha loja'),
         actions: [
           PopupMenuButton(
-            icon: Icon(Icons.more_vert),
+            icon: const Icon(Icons.more_vert),
             onSelected: (FilterOptions selectedValue) {
               setState(() {
                 if (selectedValue == FilterOptions.Favorite) {
@@ -53,11 +53,11 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
               });
             },
             itemBuilder: (_) => [
-              PopupMenuItem(
+              const PopupMenuItem(
                 child: Text('Somente favoritos'),
                 value: FilterOptions.Favorite,
               ),
-              PopupMenuItem(
+              const PopupMenuItem(
                 child: Text('Todos'),
                 value: FilterOptions.All,
               )
@@ -68,7 +68,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                 onPressed: () {
                   Navigator.of(context).pushNamed(AppRoutes.CART);
                 },
-                icon: Icon(Icons.shopping_cart)),
+                icon: const Icon(Icons.shopping_cart)),
             builder: (ctx, cart, child) => Badge(
               child: child,
               value: cart.itemCount.toString(),
@@ -78,11 +78,11 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
         ],
       ),
       body: _isloading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : ProductGrid(_showFavoriteOnly),
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
     );
   }
 }

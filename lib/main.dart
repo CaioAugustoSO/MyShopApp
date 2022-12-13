@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './utils/custom_route.dart';
 
 import './providers/auth.dart';
 import './providers/cart.dart';
@@ -48,12 +49,17 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Minha Loja',
+        title: 'My Shop',
         theme: ThemeData(
-          primarySwatch: Colors.pink,
-          accentColor: Colors.deepOrange,
-          fontFamily: 'Lato',
-        ),
+            primarySwatch: Colors.pink,
+            accentColor: Colors.deepOrange,
+            fontFamily: 'Lato',
+            pageTransitionsTheme: PageTransitionsTheme(
+              builders: {
+                TargetPlatform.android: CustomPageTransitionsBuilder(),
+                TargetPlatform.iOS: CustomPageTransitionsBuilder(),
+              },
+            )),
         debugShowCheckedModeBanner: false,
         routes: {
           AppRoutes.PRODUCT_DETAIl: (ctx) => ProductDetailScreen(),

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:myshop/providers/orders.dart';
+import 'package:myshop/utils/custom_route.dart';
+import 'package:myshop/views/orders_screen.dart';
 import '../providers/auth.dart';
 import 'package:provider/provider.dart';
 import '../utils/app_routes.dart';
@@ -12,37 +15,42 @@ class AppDrawer extends StatelessWidget {
       child: Column(
         children: [
           AppBar(
-            title: Text('Bem vindo usuário'),
+            title: const Text('Bem vindo usuário'),
             automaticallyImplyLeading: false,
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            leading: Icon(Icons.shop),
-            title: Text('Loja'),
+              leading: const Icon(Icons.shop),
+              title: const Text('Loja'),
+              onTap: () {
+                Navigator.of(context).pushReplacementNamed(
+                  AppRoutes.AUTH_HOME,
+                );
+              }),
+          const Divider(),
+          ListTile(
+            leading: const Icon(Icons.payment),
+            title: const Text('Pedidos'),
             onTap: () {
-              Navigator.of(context).pushReplacementNamed(AppRoutes.AUTH_HOME);
+              Navigator.of(context).pushReplacementNamed(
+                AppRoutes.ORDERS,
+              );
             },
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            leading: Icon(Icons.payment),
-            title: Text('Pedidos'),
+            leading: const Icon(Icons.edit),
+            title: const Text('Gerenciar Produtos'),
             onTap: () {
-              Navigator.of(context).pushReplacementNamed(AppRoutes.ORDERS);
+              Navigator.of(context).pushReplacementNamed(
+                AppRoutes.PRODUCTS,
+              );
             },
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            leading: Icon(Icons.edit),
-            title: Text('Gerenciar Produtos'),
-            onTap: () {
-              Navigator.of(context).pushReplacementNamed(AppRoutes.PRODUCTS);
-            },
-          ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.exit_to_app),
-            title: Text('Sair'),
+            leading: const Icon(Icons.exit_to_app),
+            title: const Text('Sair'),
             onTap: () {
               Provider.of<Auth>(context, listen: false).logout();
             },

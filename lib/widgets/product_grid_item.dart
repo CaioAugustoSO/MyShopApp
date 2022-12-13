@@ -1,7 +1,8 @@
+// ignore_for_file: use_key_in_widget_constructors, import_of_legacy_library_into_null_safe
+
 import 'package:flutter/material.dart';
 import '../providers/auth.dart';
 import '../providers/cart.dart';
-import '../views/product_detail_screen.dart';
 import 'package:provider/provider.dart';
 import '../providers/product.dart';
 import '../utils/app_routes.dart';
@@ -17,9 +18,13 @@ class ProductGridItem extends StatelessWidget {
       child: GridTile(
         // ignore: sort_child_properties_last
         child: GestureDetector(
-          child: Image.network(
-            product.imgURL,
-            fit: BoxFit.cover,
+          child: Hero(
+            tag: product.id.toString(),
+            child: FadeInImage(
+              placeholder: AssetImage('assets/images/placeholder.png'),
+              image: NetworkImage(product.imgURL),
+              fit: BoxFit.cover,
+            ),
           ),
           onTap: () {
             Navigator.of(context)
@@ -33,7 +38,7 @@ class ProductGridItem extends StatelessWidget {
               onPressed: () {
                 product.toggleFavorte(auth.token, auth.userId);
               },
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               icon: Icon(
                   product.isFavorite ? Icons.favorite : Icons.favorite_border),
             ),
@@ -47,11 +52,11 @@ class ProductGridItem extends StatelessWidget {
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(
+                  content: const Text(
                     'Product successfully added in cart!',
                     textAlign: TextAlign.center,
                   ),
-                  duration: Duration(seconds: 2),
+                  duration: const Duration(seconds: 2),
                   action: SnackBarAction(
                       label: 'Undo',
                       onPressed: () {
@@ -63,7 +68,7 @@ class ProductGridItem extends StatelessWidget {
             },
             icon: Icon(
               Icons.shopping_cart,
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
         ),

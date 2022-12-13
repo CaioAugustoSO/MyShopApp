@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, import_of_legacy_library_into_null_safe
+
 import 'package:flutter/material.dart';
 import '../providers/product.dart';
 import '../providers/products.dart';
@@ -15,7 +17,7 @@ class ProductGrid extends StatelessWidget {
         ? productsProvider.favoriteitems
         : productsProvider.items;
     return GridView.builder(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       itemCount: products.length,
       itemBuilder: (ctx, i) => ChangeNotifierProvider<Product>.value(
         value: products[i],
